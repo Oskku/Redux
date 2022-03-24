@@ -8,7 +8,7 @@ const unsubscribe = store.subscribe(()=>{
 /* We add new bug */
 store.dispatch(bugAdded("Osku"));
 /* We change the bug to be resolved */
-store.dispatch(bugResolved(12));
+store.dispatch(bugResolved(1));
 /* invoke only once we add so we dont have to invoke the subscribe all time to avoid memory leaks */
 unsubscribe()
 /* We delete the bug added */
