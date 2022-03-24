@@ -1,5 +1,5 @@
 import store from "./store";
-import { bugAdded ,bugRemoved,bugResolved} from "./actionCreators";
+import { bugAdded ,bugRemoved,bugResolved} from "./actions";
 /* The subscribe get called every time when the state of the store get change */
 const unsubscribe = store.subscribe(()=>{
     console.log("Store Changed !",store.getState())
