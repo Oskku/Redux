@@ -1,46 +1,18 @@
-/* Here we define the actions type so it will only be changed from here to make less bugs */
+import { createAction } from "@reduxjs/toolkit";
 
- const BUG_ADDED = "bugAdded";
- const BUG_REMOVED = "bugRemoved";
- const BUG_RESOLVED = "bugResolved";
+/* Simplify our action functions with Redux-ToolKit,
+ by bulding actions and reducers in same model*/
 
+export const bugAdded = createAction("bugAdded");
+export const bugRemoved = createAction("bugRemoved");
+export const bugResolved = createAction("bugResolved");
 
-/* Here we built a function to create for us actions instead of calling store.dispatch all time */
-export function bugAdded(description) {
-  return {
-    type: BUG_ADDED,
-    payload:{
-        description:description
-    }
-  };
-}
-
-
-export function bugRemoved (id){
-    return{
-        type: "bugRemoved",
-        payload: {
-          id:id
-        },
-    }
-}
-
-export const bugResolved = id => {
-    return {
-        type: BUG_RESOLVED,
-        payload:{
-            id
-        }
-    }
-}
-
-/* Reducer of bugs */
 
 /* Building Reducer */
 let lastId = 0;
 export default function reducer(state = [], action) {
   switch (action.type) {
-    case BUG_ADDED:
+    case bugAdded.type:
       return [
         ...state,
         {
@@ -49,9 +21,9 @@ export default function reducer(state = [], action) {
           resolved: false,
         },
       ];
-    case BUG_REMOVED:
+    case bugRemoved.type:
       return state.filter((bug) => bug.id !== action.payload.id);
-    case BUG_RESOLVED:
+    case bugResolved.type:
       return state.map((bug) =>
         bug.id === action.payload.id ? { ...bug, resolved: true } : bug
       );
