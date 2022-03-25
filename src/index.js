@@ -1,10 +1,10 @@
-import store from "./store";
-import { bugAdded ,bugRemoved,bugResolved} from "./actions";
+import configureStore from "./store/configureStore";
+import { bugAdded ,bugRemoved,bugResolved} from "./store/bugs";
+const store = configureStore();
 /* The subscribe get called every time when the state of the store get change */
 const unsubscribe = store.subscribe(()=>{
     console.log("Store Changed !",store.getState())
 })
-
 /* We add new bug */
 store.dispatch(bugAdded("Osku"));
 /* We change the bug to be resolved */
