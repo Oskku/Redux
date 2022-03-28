@@ -1,7 +1,6 @@
 # Redux small App
 
 <h1 align="center">Welcome to Osku Small Redux App 👋</h1>
-### How Redux Work
 <img alt="Redux" src="./reduxdataflowdiagram-49fa8c3968371d9ef6f2a1486bd40a26.gif" />
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
