@@ -1,10 +1,9 @@
 import { combineReducers } from "redux";
-import bugsReducer from "./bugs"
-import projectReducer from "./projects"
+import entitiesReducer from "./entities";
 
+/* Combine Project reducer and Bugs inside entities array of reducers and export them as one */
 export default combineReducers(
     {
-        bugs:bugsReducer,
-        projects:projectReducer
+      entities : entitiesReducer
     }
 )
