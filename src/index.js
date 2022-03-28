@@ -1,11 +1,14 @@
 import configureStore from "./store/configureStore";
 import { bugAdded ,bugRemoved,bugResolved} from "./store/bugs";
+import { addProject } from "./store/projects";
 
 const store = configureStore();
 /* The subscribe get called every time when the state of the store get change */
 const unsubscribe = store.subscribe(()=>{
     console.log("Store Changed !",store.getState())
 })
+/* Add New name Project */
+store.dispatch(addProject({name:"Osku"}));
 /* We add new bug */
 store.dispatch(bugAdded({description:"Osku"}));
 /* We change the bug to be resolved */
