@@ -1,33 +1,31 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 
 /* Simplify our action functions with Redux-ToolKit,
  by bulding actions and reducers in same model*/
 
 export const bugAdded = createAction("bugAdded");
-export const bugRemoved = createAction("bugRemoved");
 export const bugResolved = createAction("bugResolved");
+export const bugRemoved = createAction("bugRemoved");
 
 
-/* Building Reducer */
 let lastId = 0;
-export default function reducer(state = [], action) {
-  switch (action.type) {
-    case bugAdded.type:
-      return [
-        ...state,
-        {
-          id: ++lastId,
-          description: action.payload.description,
-          resolved: false,
-        },
-      ];
-    case bugRemoved.type:
-      return state.filter((bug) => bug.id !== action.payload.id);
-    case bugResolved.type:
-      return state.map((bug) =>
-        bug.id === action.payload.id ? { ...bug, resolved: true } : bug
-      );
-    default:
-      return state;
-  }
-}
+/* Building Reducer with toolkit and immer*/
+export default createReducer([], {
+  //key:action
+  //actions: functions () (event => eventHandler)
+  bugAdded: (state, action) => {
+    state.push({
+      id: ++lastId,
+      description: action.payload.description,
+      resolved: false,
+    });
+  },
+  bugResolved: (state, action) => {
+    const index = state.findIndex((bug) => bug.id === action.payload.id);
+    state[index].resolved = true;
+  },
+  bugRemoved: (state, action) => {
+     return state.filter((bug) => bug.id !== action.payload.id);
+  },
+
+});
