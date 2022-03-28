@@ -1,6 +1,7 @@
-import { createAction, createReducer, createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
 
 /* Simplify our action functions with Redux-ToolKit,
+createAction, createReducer,
  by bulding actions and reducers in same model with slice*/
 
 let lastId = 0;

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from './bugs'
+import reducer from './reducers'
 
 
 /* With toolkit we just import confiureStore and thats it :D */
