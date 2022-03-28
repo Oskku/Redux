@@ -13,18 +13,18 @@ let lastId = 0;
 export default createReducer([], {
   //key:action
   //actions: functions () (event => eventHandler)
-  bugAdded: (state, action) => {
+  [bugAdded.type]: (state, action) => {
     state.push({
       id: ++lastId,
       description: action.payload.description,
       resolved: false,
     });
   },
-  bugResolved: (state, action) => {
+  [bugResolved.type]: (state, action) => {
     const index = state.findIndex((bug) => bug.id === action.payload.id);
     state[index].resolved = true;
   },
-  bugRemoved: (state, action) => {
+  [bugRemoved.type]: (state, action) => {
      return state.filter((bug) => bug.id !== action.payload.id);
   },
 
