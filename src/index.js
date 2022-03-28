@@ -1,5 +1,5 @@
 import configureStore from "./store/configureStore";
-import { bugAdded ,bugRemoved,bugResolved,unresolvedBugsSelector} from "./store/bugs";
+import { bugAdded ,bugRemoved,bugResolved,bugMember,unresolvedBugsSelector} from "./store/bugs";
 import { addProject } from "./store/projects";
 
 const store = configureStore();
@@ -24,4 +24,4 @@ console.log("Select Uresolved Bugs",unresolvedBugsSelector(store.getState()));
 /* Here we see that filter copy all the time new array and it take memory */
 const x = unresolvedBugsSelector(store.getState())
 const y = unresolvedBugsSelector(store.getState())
-console.log(x === y) /* It will return false so the filter every render take new copy this is memory cost  */
+console.log(x === y) /* It will return true because the filter function it will not make new copy */
