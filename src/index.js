@@ -21,3 +21,7 @@ unsubscribe()
 store.dispatch(bugRemoved({id:1}));
 /* Here we get the current state in console log*/
 console.log("Select Uresolved Bugs",unresolvedBugsSelector(store.getState()));
+/* Here we see that filter copy all the time new array and it take memory */
+const x = unresolvedBugsSelector(store.getState())
+const y = unresolvedBugsSelector(store.getState())
+console.log(x === y) /* It will return false so the filter every render take new copy this is memory cost  */
