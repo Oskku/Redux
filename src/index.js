@@ -1,5 +1,5 @@
 import configureStore from "./store/configureStore";
-import { bugAdded ,bugRemoved,bugResolved} from "./store/bugs";
+import { bugAdded ,bugRemoved,bugResolved,unresolvedBugsSelector} from "./store/bugs";
 import { addProject } from "./store/projects";
 
 const store = configureStore();
@@ -20,4 +20,4 @@ unsubscribe()
 /* We delete the bug added */
 store.dispatch(bugRemoved({id:1}));
 /* Here we get the current state in console log*/
-console.log("State",store.getState());
+console.log("Select Uresolved Bugs",unresolvedBugsSelector(store.getState()));

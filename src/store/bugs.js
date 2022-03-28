@@ -1,4 +1,4 @@
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 /* Simplify our action functions with Redux-ToolKit,
 createAction, createReducer,
@@ -27,5 +27,10 @@ const slice = createSlice({
     },
   },
 });
+
+/* Selector Function */
+export const unresolvedBugsSelector = (state) =>state.entities.bugs.filter(bug => !bug.resolved)
+/* destructure actions object */
 export const { bugAdded, bugResolved, bugRemoved } = slice.actions;
+/* Export slice as default */
 export default slice.reducer;
