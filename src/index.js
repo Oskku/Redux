@@ -16,7 +16,10 @@ const store = configureStore();
 const unsubscribe = store.subscribe(() => {
   console.log("Store Changed !", store.getState());
 });
-
+/* Send middleware  */
+store.dispatch(()=>{
+store.dispatch({type:"Received"})
+})
 /* Add New name Project */
 store.dispatch(addProject({ name: "Osku" }));
 /* We add new bug */
