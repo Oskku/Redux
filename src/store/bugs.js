@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { createSelector } from "reselect";
 /* Simplify our action functions with Redux-ToolKit,
 createAction, createReducer,
  by bulding actions and reducers in same model with slice*/
@@ -25,14 +25,27 @@ const slice = createSlice({
     bugRemoved: (state, action) => {
       return state.filter((bug) => bug.id !== action.payload.id);
     },
+    bugAssignedToUser: (state, action) => {
+      const { bugId, userId } = action.payload;
+      const index = state.findIndex((bug) => bug.id === bugId);
+      state[index].userId = userId;
+    },
   },
 });
 
-/* Selector Function */
-export const unresolvedBugsSelector = (state) =>
-  state.entities.bugs.filter((bug) => !bug.resolved);
+/* Selector Function with no memory cost */
+export const unresolvedBugsSelector = createSelector(
+  (state) => state.entities.bugs,
+  (bugs) => !bugs.filter((bug) => !bug.resolved)
+);
+/* Get assign bugs with userId */
+export const getByUserIdSelector = (userId) =>
+  createSelector(
+    (state) => state.entities.bugs,
+    (bugs) => bugs.filter((bug) => bug.userId === userId)
+  );
 /* destructure actions object */
-export const { bugAdded, bugResolved, bugRemoved } = slice.actions;
+export const { bugAdded, bugResolved, bugRemoved, bugAssignedToUser } =
+  slice.actions;
 /* Export slice as default */
-console.log(slice.reducer.bugAdded)
 export default slice.reducer;
