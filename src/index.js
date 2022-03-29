@@ -11,10 +11,15 @@ import { addUser } from "./store/users";
 import { addProject } from "./store/projects";
 
 const store = configureStore();
+
 /* The subscribe get called every time when the state of the store get change */
 const unsubscribe = store.subscribe(() => {
   console.log("Store Changed !", store.getState());
 });
+/* Send middleware  */
+store.dispatch(()=>{
+store.dispatch({type:"Received"})
+})
 /* Add New name Project */
 store.dispatch(addProject({ name: "Osku" }));
 /* We add new bug */
