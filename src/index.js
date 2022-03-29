@@ -20,6 +20,11 @@ const unsubscribe = store.subscribe(() => {
 store.dispatch(()=>{
 store.dispatch({type:"Received"})
 })
+
+store.dispatch({
+  type:"There is data",
+  payload:{message:"No data"}
+})
 /* Add New name Project */
 store.dispatch(addProject({ name: "Osku" }));
 /* We add new bug */
