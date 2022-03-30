@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import data from "./middleware/data";
+import { apiCallBegan } from "./api";
 /* Simplify our action functions with Redux-ToolKit,
 createAction, createReducer,
  by bulding actions and reducers in same model with slice*/
@@ -15,9 +16,9 @@ const slice = createSlice({
   },
   reducers: {
     //actions: functions () (event => eventHandler)
-  bugsReceived : (state,action)=>{
-    state.list = action.payload
-  },
+    bugsReceived: (state, action) => {
+      state.list = action.payload;
+    },
     bugAdded: (state, action) => {
       state.list.push({
         id: ++lastId,
@@ -41,6 +42,21 @@ const slice = createSlice({
   },
 });
 
+export const {
+  bugAdded,
+  bugResolved,
+  bugRemoved,
+  bugAssignedToUser,
+  bugsReceived,
+} = slice.actions;
+/* Actions Creators */
+const url = "/bugs";
+
+export const loadBugs = () =>
+  apiCallBegan({
+    url: url,
+    onSuccess: bugsReceived.type,
+  });
 /* Selector Function with no memory cost */
 export const unresolvedBugsSelector = createSelector(
   (state) => state.list.entities.bugs,
@@ -53,12 +69,6 @@ export const getByUserIdSelector = (userId) =>
     (bugs) => bugs.filter((bug) => bug.userId === userId)
   );
 /* destructure actions object */
-export const {
-  bugAdded,
-  bugResolved,
-  bugRemoved,
-  bugAssignedToUser,
-  bugsReceived,
-} = slice.actions;
+
 /* Export slice as default */
 export default slice.reducer;
