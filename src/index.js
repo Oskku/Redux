@@ -6,6 +6,6 @@ store.dispatch(actions.apiCallBegan(
   {
     url: "/bugs",
     data: {},
-    onSuccess: actions.apiCallSuccess.type,
+    onSuccess: "BugsReceived",
   },
 ))

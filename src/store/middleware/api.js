@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as actions from "../api";
-console.log(actions);
+
 
 const api =
   ({ dispatch }) =>
