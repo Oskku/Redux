@@ -15,6 +15,9 @@ const slice = createSlice({
   },
   reducers: {
     //actions: functions () (event => eventHandler)
+  bugsReceived : (state,action)=>{
+    state.list = action.payload
+  },
     bugAdded: (state, action) => {
       state.list.push({
         id: ++lastId,
@@ -50,7 +53,12 @@ export const getByUserIdSelector = (userId) =>
     (bugs) => bugs.filter((bug) => bug.userId === userId)
   );
 /* destructure actions object */
-export const { bugAdded, bugResolved, bugRemoved, bugAssignedToUser } =
-  slice.actions;
+export const {
+  bugAdded,
+  bugResolved,
+  bugRemoved,
+  bugAssignedToUser,
+  bugsReceived,
+} = slice.actions;
 /* Export slice as default */
 export default slice.reducer;

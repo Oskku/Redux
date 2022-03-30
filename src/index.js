@@ -5,7 +5,9 @@ const store = configureStore();
 store.dispatch(actions.apiCallBegan(
   {
     url: "/bugs",
-    data: {},
-    onSuccess: "BugsReceived",
+    onSuccess: "bugs/bugsReceived",
   },
 ))
+
+
+console.log(store.getState())

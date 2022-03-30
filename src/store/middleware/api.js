@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as actions from "../api";
 
-
 const api =
   ({ dispatch }) =>
   (next) =>
@@ -19,7 +18,7 @@ const api =
       /* General success message action */
       dispatch(actions.apiCallSuccess(response.data));
       /* Specific success message action */
-      if(onSuccess) dispatch({ type: onSuccess, payload: response.data });
+      if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {
       /* General Error Action */
       dispatch(actions.apiCallFailed(error));
