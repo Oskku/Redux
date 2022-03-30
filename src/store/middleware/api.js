@@ -1,12 +1,12 @@
 import axios from "axios";
-
-
+import * as actions from "../api";
+console.log(actions);
 
 const api =
   ({ dispatch }) =>
   (next) =>
   async (action) => {
-    if (action.type !== "apiCallBegan") return next(action);
+    if (action.type !== actions.apiCallBegan.type) return next(action);
     next(action);
     const { url, method, data, onSuccess, onError } = action.payload;
     try {
@@ -16,12 +16,19 @@ const api =
         method,
         data,
       });
-      dispatch({type:onSuccess,payload:response.data})
+      /* General success message action */
+      dispatch(actions.apiCallSuccess(response.data));
+      /* Specific success message action */
+      if(onSuccess) dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {
-      dispatch({
-          type:onError,
-          payload:error
-      })
+      /* General Error Action */
+      dispatch(actions.apiCallFailed(error));
+      /* Specific error action */
+      if (onError)
+        dispatch({
+          type: onError,
+          payload: error,
+        });
     }
   };
 
