@@ -16,8 +16,15 @@ const slice = createSlice({
   },
   reducers: {
     //actions: functions () (event => eventHandler)
+    bugRequestFail : (state,action)=>{
+      state.loading=false
+    },
+    bugsRequested: (state, action) => {
+      state.loading = true;
+    },
     bugsReceived: (state, action) => {
       state.list = action.payload;
+      state.loading=false
     },
     bugAdded: (state, action) => {
       state.list.push({
@@ -48,6 +55,8 @@ export const {
   bugRemoved,
   bugAssignedToUser,
   bugsReceived,
+  bugsRequested,
+  bugRequestFail
 } = slice.actions;
 /* Actions Creators */
 const url = "/bugs";
@@ -55,6 +64,8 @@ const url = "/bugs";
 export const loadBugs = () =>
   apiCallBegan({
     url: url,
+    onStart: bugsRequested.type,
+    onFail:bugRequestFail.type,
     onSuccess: bugsReceived.type,
   });
 /* Selector Function with no memory cost */
