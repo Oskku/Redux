@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import data from "./middleware/data";
 import { apiCallBegan } from "./api";
+import moment from "moment";
 /* Simplify our action functions with Redux-ToolKit,
 createAction, createReducer,
  by bulding actions and reducers in same model with slice*/
@@ -16,15 +17,16 @@ const slice = createSlice({
   },
   reducers: {
     //actions: functions () (event => eventHandler)
-    bugRequestFail : (state,action)=>{
-      state.loading=false
+    bugRequestFail: (state, action) => {
+      state.loading = false;
     },
     bugsRequested: (state, action) => {
       state.loading = true;
     },
     bugsReceived: (state, action) => {
       state.list = action.payload;
-      state.loading=false
+      state.loading = false;
+      state.lastFetch = Date.now();
     },
     bugAdded: (state, action) => {
       state.list.push({
@@ -56,18 +58,27 @@ export const {
   bugAssignedToUser,
   bugsReceived,
   bugsRequested,
-  bugRequestFail
+  bugRequestFail,
 } = slice.actions;
 /* Actions Creators */
 const url = "/bugs";
 
-export const loadBugs = () =>
-  apiCallBegan({
-    url: url,
-    onStart: bugsRequested.type,
-    onFail:bugRequestFail.type,
-    onSuccess: bugsReceived.type,
-  });
+export const loadBugs = () => (dispatch, getState) => {
+  const { lastFetch } = getState().entities.bugs;
+  const diffInMinutes = moment().diff(moment(lastFetch),"minute")
+  if(diffInMinutes < 1) return;
+  
+
+  dispatch(
+    apiCallBegan({
+      url: url,
+      onStart: bugsRequested.type,
+      onFail: bugRequestFail.type,
+      onSuccess: bugsReceived.type,
+    })
+  );
+};
+
 /* Selector Function with no memory cost */
 export const unresolvedBugsSelector = createSelector(
   (state) => state.list.entities.bugs,
